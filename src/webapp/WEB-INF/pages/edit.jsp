@@ -12,21 +12,14 @@
     <title>Edit</title>
 </head>
 <body>
-<%--<form action="user" method="post">--%>
-<%--    <c:forEach var="user" items="${current_user}">--%>
-<%--        <tr>--%>
-<%--            <td>${user.getId()}</td>--%>
-<%--            <td><input type="text" name="email" value="${user.email()}"></td>--%>
-<%--            <td><input type="text" name="name" value="${user.name()}"></td>--%>
-<%--            <input type="submit" value="OK">--%>
-<%--        </tr>--%>
-<%--    </c:forEach>--%>
-<%--</form>--%>
 
-<form action="/edit/update" method="post">
+<form action="/admin/edit/update" method="post">
     <input type="text" name="id" value="${user.id}">
-    <input type="text" name="email" value="${user.email}">
     <input type="text" name="name" value="${user.name}">
+    <input type="text" name="email" value="${user.email}">
+    <c:forEach var="role" items="${user.roleSet}">
+        <input type="text" name="role" value="${role.role}">
+    </c:forEach>
     <input type="submit" value="OK">
 </form>
 </body>

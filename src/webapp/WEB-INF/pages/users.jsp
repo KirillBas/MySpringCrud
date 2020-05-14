@@ -18,9 +18,10 @@
 <table border="1px">
 
     <h1>Add user</h1>
-    <form action="user" method="post">
-        <input type="text" name="email">
+    <form action="/admin/users" method="post">
         <input type="text" name="name">
+        <input type="text" name="email">
+        <input type="text" name="password">
         <input type="submit" value="OK">
     </form>
 
@@ -29,6 +30,7 @@
         <th>Id</th>
         <th>Name</th>
         <th>Email</th>
+        <th>Role</th>
         <th>Delete</th>
         <th>Update</th>
 
@@ -37,10 +39,13 @@
     <c:forEach var="user" items="${users}">
         <tr>
             <td>${user.getId()}</td>
-            <td>${user.getEmail()}</td>
             <td>${user.getName()}</td>
-            <td><a href="<c:url value='/delete/${user.id}'/>">Delete</a></td>
-            <td><a href="<c:url value='/edit/${user.id}'/>">Update</a></td>
+            <td>${user.getEmail()}</td>
+            <c:forEach var="role" items="${user.roleSet}">
+                <td>${role.role}</td>
+            </c:forEach>
+            <td><a href="<c:url value='/admin/delete/${user.id}'/>">Delete</a></td>
+            <td><a href="<c:url value='/admin/edit/${user.id}'/>">Update</a></td>
         </tr>
     </c:forEach>
 </table>

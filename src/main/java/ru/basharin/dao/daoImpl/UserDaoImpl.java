@@ -5,10 +5,12 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.basharin.dao.UserDao;
+import ru.basharin.model.Role;
 import ru.basharin.model.User;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -23,20 +25,22 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getById(long id) {
-        User user = (User) sessionFactory.getCurrentSession()
+        return (User) sessionFactory.getCurrentSession()
                 .createQuery("from User where id=:id").setParameter("id", id).uniqueResult();
-        return user;
     }
 
     @Override
     public void add(User user) {
+        Role role = new Role();
+        role.setRole("user");
+        user.addRole(role);
         sessionFactory.getCurrentSession().save(user);
     }
 
     @Override
     public void delete(long id) {
         Session session = sessionFactory.getCurrentSession();
-        User user = session.load(User.class, new Long(id));
+        User user = session.load(User.class, id);
         if(user!=null){
             session.delete(user);
         }
@@ -44,6 +48,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(User user) {
+//        Session session = sessionFactory.getCurrentSession();
+////        User currentUser = session.load(User.class, user.getId());
+////        currentUser.setName(user.getName());
+////        currentUser.setEmail(user.getEmail());
+////        currentUser.setPassword(user.getPassword());
+////        session.update(currentUser);
         sessionFactory.getCurrentSession().update(user);
     }
 
@@ -56,5 +66,21 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean auth(String name, String password) {
+        List<User> userList = (List<User>) sessionFactory.getCurrentSession().createQuery("from User");
+        for (User authUser: userList) {
+            if (authUser.getName().equals(name) && authUser.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public User getByName(String name) {
+        return (User) sessionFactory.getCurrentSession().createQuery("from User where name=: name").setParameter("name", name).uniqueResult();
     }
 }

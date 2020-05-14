@@ -1,6 +1,11 @@
 package ru.basharin.service.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.basharin.dao.UserDao;
@@ -11,6 +16,10 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private BCryptPasswordEncoder bCrypt;
+
     @Autowired
     private UserDao userDao;
 
@@ -29,6 +38,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void save(User user) {
+        user.setPassword(bCrypt.encode(user.getPassword()));
         userDao.add(user);
     }
 
@@ -48,5 +58,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByNameAndEmail(String name, String email) {
         return userDao.getUserByNameEmail(name, email);
+    }
+
+    @Transactional
+    @Override
+    public boolean authUser(String name, String password) {
+        return userDao.auth(name, password);
+    }
+
+    @Transactional
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userDao.getByName(s);
     }
 }
