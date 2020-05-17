@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+<form th:action="@{/admin/edit/update}" method="post" th:object="${user}">
+    <input type="text" id="id" th:field="${user.id}">
+    <input type="text" id="name" th:field="${user.name}">
+    <input type="text" id="email" th:field="${user.email}">
+    <td th:each="role:${user.getRoleSet()}" th:utext="${role.role}"></td>
+    <input type="submit" value="OK">
+</form>
+</body>
+</html>

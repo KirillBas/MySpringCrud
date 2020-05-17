@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<table border="1px">
+
+    <h1>Add user</h1>
+    <form th:action="@{/admin/users}" method="post">
+        <input type="text" name="name">
+        <input type="text" name="email">
+        <input type="text" name="password">
+        <input type="submit" value="OK">
+    </form>
+
+    <h1>Users list</h1>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Delete</th>
+        <th>Update</th>
+
+    </tr>
+
+    <tr th:each="user:${users}">
+
+        <td th:utext="${user.getId()}"></td>
+        <td th:utext="${user.getName()}"></td>
+        <td th:utext="${user.getEmail()}"></td>
+
+        <td th:each="role:${user.getRoleSet()}" th:utext="${role.role}"></td>
+        <td><a th:href="@{/admin/delete(id=${user.getId()})}">Delete</a></td>
+        <td><a th:href="@{/admin/edit(id=${user.id})}">Update</a></td>
+    </tr>
+</table>
+</body>
+</html>
