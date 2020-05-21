@@ -1,6 +1,8 @@
 package ru.basharin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -24,13 +26,14 @@ public class UserController {
         modelMap.addAttribute("users", userService.getUsers());
         return "users";
     }
-    // TODO: 12.05.2020 придумать как выдернуть роль из сета
 
-//    @RequestMapping(value = "users", method = RequestMethod.GET)
-//    public String getRolesByUser(@ModelAttribute("user") User user, ModelMap model) {
-//        model.addAttribute("roles", roleService.getRolesByUserId(user));
-//        return "users";
-//    }
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String getUser(ModelMap model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long id = user.getId();
+        model.addAttribute("current_user", userService.getUserById(id));
+        return "user";
+    }
 
     @RequestMapping(value = "/admin/users", method = RequestMethod.POST)
     public String addUser(@ModelAttribute("user") User user) {
