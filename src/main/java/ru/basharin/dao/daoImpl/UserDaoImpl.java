@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void add(User user) {
         Role role = new Role();
-        role.setRole("user");
+        role.setRole("USER");
         user.addRole(role);
         sessionFactory.getCurrentSession().save(user);
     }
@@ -48,12 +48,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(User user) {
-//        Session session = sessionFactory.getCurrentSession();
-////        User currentUser = session.load(User.class, user.getId());
-////        currentUser.setName(user.getName());
-////        currentUser.setEmail(user.getEmail());
-////        currentUser.setPassword(user.getPassword());
-////        session.update(currentUser);
         sessionFactory.getCurrentSession().update(user);
     }
 
