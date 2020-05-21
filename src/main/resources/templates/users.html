@@ -24,12 +24,12 @@
 <body>
 <div class="container-fluid">
     <div class="sidenav">
-<!--        TODO не работает авторизация-->
+        <!--        TODO не работает авторизация-->
         <div class="list-group list-group-flush">
             <a sec:authorize="hasAuthority('ADMIN')"
                class="active list-group-item list-group-item-action bg-light"
                th:href="@{/admin/users}">Admin page</a>
-<!--            <a th:href="@{/userInfo}" class="list-group-item list-group-item-action bg-light">User page</a>-->
+            <!--            <a th:href="@{/userInfo}" class="list-group-item list-group-item-action bg-light">User page</a>-->
         </div>
 
         <div class="list-group list-group-flush">
@@ -125,13 +125,16 @@
                                                            th:placeholder="${user.email}">
                                                     <label for="roles">Role</label>
                                                     <br>
-                                                    <select disabled class="custom-select" name="roles" id="roles" multiple>
+                                                    <select disabled class="custom-select" name="roles" id="roles"
+                                                            multiple>
                                                         <option th:each="role:${user.getRoleSet()}"
                                                                 th:text="${role.getRole()}"
                                                                 th:value="${role.getRole()}"></option>
                                                     </select>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close
+                                                        </button>
                                                         <button type="submit" class="btn btn-primary">Delete</button>
                                                     </div>
                                                 </form>
