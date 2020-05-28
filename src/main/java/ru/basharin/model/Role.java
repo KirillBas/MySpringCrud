@@ -1,5 +1,6 @@
 package ru.basharin.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -15,10 +16,11 @@ public class Role implements GrantedAuthority {
     private long id;
 
 //    @Column(name = "role", insertable = false )
-    @Column(name = "role", columnDefinition = "varchar(255) default 'user'")
+    @Column(name = "role", columnDefinition = "varchar(255) default 'USER'")
     private String role;
 
     @ManyToMany(mappedBy = "roleSet")
+    @JsonIgnore
     private Set<User> userSet = new HashSet<>();
 
     public long getId() {
