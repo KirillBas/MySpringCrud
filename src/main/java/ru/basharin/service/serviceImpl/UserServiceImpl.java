@@ -1,10 +1,7 @@
 package ru.basharin.service.serviceImpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +14,14 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private BCryptPasswordEncoder bCrypt;
+    private final BCryptPasswordEncoder bCrypt;
 
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    public UserServiceImpl(BCryptPasswordEncoder bCrypt, UserDao userDao) {
+        this.bCrypt = bCrypt;
+        this.userDao = userDao;
+    }
 
     @Transactional(readOnly = true)
     @Override

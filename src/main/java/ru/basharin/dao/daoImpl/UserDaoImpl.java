@@ -10,10 +10,10 @@ import ru.basharin.model.User;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class UserDaoImpl implements UserDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -41,7 +41,7 @@ public class UserDaoImpl implements UserDao {
     public void delete(long id) {
         Session session = sessionFactory.getCurrentSession();
         User user = session.load(User.class, id);
-        if(user!=null){
+        if (user != null) {
             session.delete(user);
         }
     }
@@ -54,7 +54,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserByNameEmail(String name, String email) {
         List<User> userList = (List<User>) sessionFactory.getCurrentSession().createQuery("from User");
-        for (User res: userList) {
+        for (User res : userList) {
             if (res.getName().equals(name) && res.getEmail().equals(email)) {
                 return res;
             }
@@ -65,7 +65,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean auth(String name, String password) {
         List<User> userList = (List<User>) sessionFactory.getCurrentSession().createQuery("from User");
-        for (User authUser: userList) {
+        for (User authUser : userList) {
             if (authUser.getName().equals(name) && authUser.getPassword().equals(password)) {
                 return true;
             }
