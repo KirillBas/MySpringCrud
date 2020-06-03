@@ -9,8 +9,8 @@ public interface UserService extends UserDetailsService {
     List<User> getUsers();
     User getUserById(long id);
     void save(User user);
-    void delete(long id);
+    void delete(Long id);
     void update(User user);
     User getUserByNameAndEmail(String name, String email);
-    boolean authUser(String name, String password);
+    User authUser(String name, String password);
 }

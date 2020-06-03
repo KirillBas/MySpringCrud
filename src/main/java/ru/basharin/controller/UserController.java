@@ -31,9 +31,7 @@ public class UserController {
 //            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
-        return new ResponseEntity<>(users, HttpStatus.OK);
-//        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(users);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -92,8 +90,8 @@ public class UserController {
         return "users";
     }
 
-    @RequestMapping(value = "/user")
-    public String userProfile() {
-        return "users";
-    }
+//    @RequestMapping(value = "/user")
+//    public String userProfile() {
+//        return "users";
+//    }
 }

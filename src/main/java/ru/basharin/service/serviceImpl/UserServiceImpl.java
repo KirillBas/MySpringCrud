@@ -45,13 +45,14 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         userDao.delete(id);
     }
 
     @Transactional
     @Override
     public void update(User user) {
+        user.setPassword(bCrypt.encode(user.getPassword()));
         userDao.update(user);
     }
 
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public boolean authUser(String name, String password) {
+    public User authUser(String name, String password) {
         return userDao.auth(name, password);
     }
 

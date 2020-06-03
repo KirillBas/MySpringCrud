@@ -21,8 +21,12 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan(value = "ru.basharin")
 public class ConnectConfig {
-    @Autowired
-    private Environment env;
+
+    private final Environment env;
+
+    public ConnectConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public DataSource getDataSource() {

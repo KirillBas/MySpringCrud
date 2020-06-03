@@ -63,14 +63,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean auth(String name, String password) {
-        List<User> userList = (List<User>) sessionFactory.getCurrentSession().createQuery("from User");
+    public User auth(String name, String password) {
+        List<User> userList = (List<User>) sessionFactory.getCurrentSession().createQuery("from User").list();
         for (User authUser : userList) {
             if (authUser.getName().equals(name) && authUser.getPassword().equals(password)) {
-                return true;
+                return authUser;
             }
         }
-        return false;
+        return null;
     }
 
     @Override
