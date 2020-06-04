@@ -80,10 +80,10 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String loginPage() {
-        return "login";
-    }
+//    @GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public String loginPage() {
+//        return "login";
+//    }
 
     @RequestMapping(value = "/admin/users")
     public String index() {

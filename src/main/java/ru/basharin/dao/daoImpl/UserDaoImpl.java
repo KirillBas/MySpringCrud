@@ -2,6 +2,7 @@ package ru.basharin.dao.daoImpl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.basharin.dao.UserDao;
@@ -9,6 +10,7 @@ import ru.basharin.model.Role;
 import ru.basharin.model.User;
 
 import javax.persistence.TypedQuery;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -31,9 +33,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void add(User user) {
-        Role role = new Role();
-        role.setRole("USER");
-        user.addRole(role);
+        user.setRoleSet(Collections.singleton(new Role("USER")));
         sessionFactory.getCurrentSession().save(user);
     }
 

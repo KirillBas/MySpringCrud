@@ -26,21 +26,19 @@ public class UserRestController {
     }
 
     @PostMapping(value = "/rest/admin/users")
-    @ResponseBody
-    public ResponseEntity<Void> addUser(User user) {
+    public ResponseEntity<Void> addUser(@RequestBody User user) {
         userService.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/rest/admin/delete/{id}")
+    @DeleteMapping(value = "/rest/admin/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/rest/admin/edit/update")
-    @ResponseBody
-    public ResponseEntity<Void> editUser(User user) {
+    public ResponseEntity<Void> editUser(@RequestBody User user) {
         User currentUser = userService.getUserById(user.getId());
         currentUser.setName(user.getName());
         currentUser.setEmail(user.getEmail());
@@ -48,8 +46,14 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(value = "/rest/login")
+    @PostMapping(value = "/login")
     public ResponseEntity<User> getAuth(@ModelAttribute String name, @ModelAttribute String password) {
         return ResponseEntity.ok(userService.authUser(name, password));
+    }
+
+    @GetMapping(value = "/user/name={name}")
+    public ResponseEntity<User> getByUserName(@PathVariable("name") String name) {
+        User user = userService.getUserByName(name);
+        return ResponseEntity.ok(user);
     }
 }

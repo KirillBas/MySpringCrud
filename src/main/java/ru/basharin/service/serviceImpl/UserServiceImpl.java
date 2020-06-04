@@ -64,13 +64,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User authUser(String name, String password) {
-        return userDao.auth(name, password);
+    public User getUserByName(String name) {
+        return userDao.getByName(name);
     }
 
     @Transactional
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userDao.getByName(s);
+    public User authUser(String name, String password) {
+        return userDao.auth(name, password);
     }
 }
